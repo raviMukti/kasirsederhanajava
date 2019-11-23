@@ -1,25 +1,5 @@
-//Jumlah pelanggan diinputkan oleh pengguna / User 
-//User Melakukan Input nomor meja, nama_pelanggan, menu makanan yang dipilih, menu minuman 
-//yang dipilih dan masing masing jumlahnya sesuai dgn jml pelanggan yang diinputkan sebelumnya. 
-//Program menampilkan subtotal dari menu yang dipesan dengan rumus :
-//Program menampilkan subtotal dari menu yang dipesan dengan rumus : 
-//a. Subtotal_Makan=jml_mkn*hrg_mkn
-//b. Subtotal_Minum=jml_mnm*hrg_mnm 
-//Program menampilkan pertanyaan, Apakah ada tambahan pesanan?
-//Jika ya, user bisa kembali menginputkan pesanan
-//Jika tidak maka program akan menghitung total_pembelian dengan rumus : 
-//Total_Pembelian =Subtotal_makan+Subtotal_Minum
-//Jika Total_Pembelian  lebih dari 150.000 maka pelanggan mendapatkan diskon 15%
-//Jika Total_Pembelian lebih dari 300.000 maka diskon 20%
-//Total_Bayar adalah (Total_Pembelian – Diskon )+ Pajak
-//Pajak= 10% * Total_Pembelian
-//Terakhir, Apikasi Menampilkan List Pelanggan berupa nomor_meja, nama_pelanggan, makanan yang 
-//dipesan, harga makanan, dan jumlahnya,  minuman yang dipesan, harga minuman, dan jumlahnya
-//serta total yang harus dibayar. Dalam Bentuk Tabel 
-
 package ravimukti_17111247;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -32,16 +12,25 @@ public class RaviMukti_17111247 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-                
-        String [][] transaksi = new String[5][8];
-        Scanner inputLokasi = new Scanner(System.in);
-        Scanner inputTransaksiMenu = new Scanner(System.in);
+
+        int i = 0;
+        int pilihan;
+        int jumlahPesanan;
+        double total = 0;
+        double diskon = 0;
+        double grandTotal = 0;
+        String ulangi, nama, meja;
+        String[] menu = new String[100];
+        double[] harga = new double[100];
+        double[] subtotal = new double[100];
+        int[] jmlPesan = new int[100];
+        Scanner inputMeja = new Scanner(System.in);
         Scanner inputNama = new Scanner(System.in);
         Scanner inputMenu = new Scanner(System.in);
-        String nama, lokasi, menu, transaksiMenu;
-        boolean ulangi = false;
-        
-        
+        Scanner inputHarga = new Scanner(System.in);
+        Scanner inputJumlahPesanan = new Scanner(System.in);
+        Scanner inputUlangi = new Scanner(System.in);
+
         Minuman minuman = new Minuman();
         Minuman minuman2 = new Minuman();
         Minuman minuman3 = new Minuman();
@@ -52,7 +41,7 @@ public class RaviMukti_17111247 {
         minuman.setHargaMenu(30000);
         minuman2.setNamaMenu("Kopi Ti Kebon");
         minuman2.setHargaMenu(75000);
-        minuman3.setNamaMenu("Jus Alpukhaat");
+        minuman3.setNamaMenu("Jus Alpukhat");
         minuman3.setHargaMenu(100000);
         makanan.setNamaMenu("Pecel Lele");
         makanan.setHargaMenu(80000);
@@ -60,13 +49,13 @@ public class RaviMukti_17111247 {
         makanan2.setHargaMenu(95000);
         makanan3.setNamaMenu("Nasi Goreng");
         makanan3.setHargaMenu(100000);
-        System.out.println("-------------------------------");
-        System.out.println("         RESTO ABSURD          ");
-        System.out.println("-------------------------------");
-        System.out.println("Nama Pelanggan : ");
-        nama = inputNama.nextLine().toString();
-        System.out.println("Nomor Meja : ");
-        lokasi = inputLokasi.nextLine().toString();
+        System.out.println("---------------------------------------------------");
+        System.out.println("                 RESTO ABSURD BEUT                 ");
+        System.out.println("---------------------------------------------------");
+        System.out.println("Masukin nomer mejanya disini : ");
+        meja = inputMeja.nextLine();
+        System.out.println("Nah nama kamu juga ya disini : ");
+        nama = inputNama.nextLine();
         System.out.println("\n");
         do {
             System.out.println("---------------------------------------------------");
@@ -80,50 +69,74 @@ public class RaviMukti_17111247 {
             System.out.println("5. " + minuman2.getNamaMenu() + "\tHarga : " + minuman2.getHargaMenu());
             System.out.println("6. " + minuman3.getNamaMenu() + "\tHarga : " + minuman3.getHargaMenu());
             System.out.println("---------------------------------------------------");
-            System.out.println("Silakan Pesan Menu Coy : ");
-            menu = inputMenu.nextLine().toString();
-            System.out.println("---------------------------------------------------");
-            System.out.println("Apakah ada tambahan? ? (Y/N)");
-            transaksiMenu = inputTransaksiMenu.next();
-            switch(transaksiMenu){
-                case "Y":
-                    ulangi = true;
+            System.out.println("Coba masukin makanan yang mau kamu pesen : ");
+            pilihan = inputMenu.nextInt();
+            switch (pilihan) {
+                case 1:
+                    menu[i] = makanan.getNamaMenu();
+                    harga[i] = makanan.getHargaMenu();
                     break;
-                case "N":
-                    ulangi = false;
+                case 2:
+                    menu[i] = makanan2.getNamaMenu();
+                    harga[i] = makanan2.getHargaMenu();
+                    break;
+                case 3:
+                    menu[i] = makanan3.getNamaMenu();
+                    harga[i] = makanan3.getHargaMenu();
+                    break;
+                case 4:
+                    menu[i] = minuman.getNamaMenu();
+                    harga[i] = minuman.getHargaMenu();
+                    break;
+                case 5:
+                    menu[i] = minuman2.getNamaMenu();
+                    harga[i] = minuman2.getHargaMenu();
+                    break;
+                case 6:
+                    menu[i] = minuman3.getNamaMenu();
+                    harga[i] = minuman3.getHargaMenu();
                     break;
                 default:
-                    ulangi = false;
+                    menu[i] = "Kamu milih apa sih? Ini gak ada di menu";
+                    harga[i] = 0;
+                    break;
             }
-        } while (ulangi == true);
-        
-}
-};
-
-class TransaksiResto {
-    private String nomorMeja;
-    private String namaPembeli;
-
-    public TransaksiResto(String nomorMeja, String namaPembeli) {
-        this.nomorMeja = nomorMeja;
-        this.namaPembeli = namaPembeli;
-    }
-
-    public String getNamaPembeli() {
-        return namaPembeli;
-    }
-
-    public void setNama(String namaPembeli) {
-        this.namaPembeli = namaPembeli;
-    }
-
-    public String getNomorMeja() {
-        return nomorMeja;
-    }
-
-    public void setNomorMeja(String nomorMeja) {
-        this.nomorMeja = nomorMeja;
-    }
-    
-    
+            System.out.println("Kamu mau pesennya berapa banyak? ");
+            jumlahPesanan = inputJumlahPesanan.nextInt();
+            jmlPesan[i] = jumlahPesanan;
+            subtotal[i] = harga[i]*jmlPesan[i];
+            System.out.println("Menu yang kamu pesan nih : " + menu[i]);
+            System.out.println("Harga per menu segini ya : " + harga[i]);
+            System.out.println("Kamu pesannya sebanyak ini nih : " + jmlPesan[i]);
+            System.out.println("Hmm kamu mau pesen lagi gak ? (Y/N)");
+            ulangi = inputUlangi.next();
+            i++;
+        } while (ulangi.equals("Y") || ulangi.equals("y"));
+        System.out.println("Hai " + nama + ", meja kamu di " + meja);
+        System.out.println("nih menu yang kamu pesan " + i + ", detailnya ini ya..");
+        System.out.println("---------------------------------------------------");
+        for (int j = 0; j < i; j++) {
+                System.out.println(menu[j] + " x " + jmlPesan[j] + "\t = " + subtotal[j]);
+                total += subtotal[j];
+        }
+        System.out.println("---------------------------------------------------");
+        System.out.println("Subtotal\t: " + total);
+        if (total >= 150000 &&  total < 300000) {
+            diskon = total*0.15;
+            System.out.println("Diskon\t\t: " + diskon);
+        } else if (total >= 300000){
+            diskon = total*0.3;
+            System.out.println("Diskon\t\t: " + diskon);
+        }
+        grandTotal = total - diskon;
+        System.out.println("GrandTotal\t: " + grandTotal);
+        System.out.println("\n\n\n");
+        System.out.println("---------------------------------------------------");
+        System.out.println("           TRANSAKSI RESTO ABSURD BEUT             ");
+        System.out.println("---------------------------------------------------");
+        System.out.println("Meja\t\t|Nama\t\t|Makanan\t|Subtotal\t|Diskon\t\t|Total");
+        for (int m = 0; m < i; m++) {
+            System.out.print(meja+"\t\t"+nama+"\t\t"+menu[m]+"\t\t"+total+"\t\t"+diskon+"\t\t"+grandTotal);
+        }
+    }   
 };
