@@ -18,6 +18,7 @@ public class RaviMukti_17111247 {
         int jumlahPesanan;
         double total = 0;
         double diskon = 0;
+        double pajak = 0;
         double grandTotal = 0;
         String ulangi, nama, meja;
         String[] menu = new String[100];
@@ -128,15 +129,17 @@ public class RaviMukti_17111247 {
             diskon = total*0.3;
             System.out.println("Diskon\t\t: " + diskon);
         }
-        grandTotal = total - diskon;
+        pajak = total*0.1;
+        grandTotal = (total - diskon) + pajak;
+        System.out.println("Pajak\t\t: " + pajak);
         System.out.println("GrandTotal\t: " + grandTotal);
         System.out.println("\n\n\n");
         System.out.println("---------------------------------------------------");
         System.out.println("           TRANSAKSI RESTO ABSURD BEUT             ");
         System.out.println("---------------------------------------------------");
-        System.out.println("Meja\t\t|Nama\t\t|Makanan\t|Subtotal\t|Diskon\t\t|Total");
+        System.out.println("Meja\t\t|Nama\t\t|Makanan\t\t|Subtotal\t|Diskon\t\t|Total");
         for (int m = 0; m < i; m++) {
-            System.out.print(meja+"\t\t"+nama+"\t\t"+menu[m]+"\t\t"+total+"\t\t"+diskon+"\t\t"+grandTotal);
+            System.out.println(meja+"\t\t"+nama+"\t\t"+menu[m]+"\t\t"+total+"\t"+diskon+"\t\t"+grandTotal);
         }
     }   
 };
